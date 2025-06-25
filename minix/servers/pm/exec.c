@@ -40,10 +40,6 @@ do_exec(void)
 {
 	message m;
 	
-	/*Print the executable path */
-	
-	printf("Executando: %s\n", (char *)m_in.m_lc_pm_exec.name);
-
 	/* Forward call to VFS */
 	memset(&m, 0, sizeof(m));
 	m.m_type = VFS_PM_EXEC;
