@@ -27,6 +27,7 @@
 #include <libexec.h>
 #include <sys/ptrace.h>
 #include "mproc.h"
+#include <stdio.h>
 
 #define ESCRIPT	(-2000)	/* Returned by read_header for a #! script. */
 #define PTRSIZE	sizeof(char *) /* Size of pointers in argv[] and envp[]. */
@@ -52,6 +53,13 @@ do_exec(void)
 	m.VFS_PM_FRAME = (void *)m_in.m_lc_pm_exec.frame;
 	m.VFS_PM_FRAME_LEN = m_in.m_lc_pm_exec.framelen;
 	m.VFS_PM_PS_STR = m_in.m_lc_pm_exec.ps_str;
+
+	/* Imprime o caminho do executavel */
+	printf("Executando: ");
+	for(int i = 0; i < m_in.m_lc_pm_exec.namelen; i++) {
+		printf("%c", m_in.m_lc_pm_exec.name[i]);
+	}
+	printf("\n");
 
 	tell_vfs(mp, &m);
 
