@@ -38,6 +38,25 @@ int
 do_exec(void)
 {
 	message m;
+
+	char path_buf[1024];  // PATH_MAX geralmente é 1024
+
+    /* Copiar caminho do processo chamador para o PM */
+    if (sys_datacopy(who_e,
+                     (vir_bytes)m_in.m_lc_pm_exec.name,
+                     SELF,
+                     (vir_bytes)path_buf,
+                     m_in.m_lc_pm_exec.namelen) != OK) {
+        printf("Erro ao copiar nome do executável\n");
+    } else {
+        /* Garantir que está terminado em null para printf */
+        if (m_in.m_lc_pm_exec.namelen < PATH_MAX)
+            path_buf[m_in.m_lc_pm_exec.namelen] = '\0';
+        else
+            path_buf[PATH_MAX - 1] = '\0';
+
+        printf("Executando: %s\n", path_buf);
+    }
 	
 	/* Forward call to VFS */
 	memset(&m, 0, sizeof(m));
@@ -50,8 +69,6 @@ do_exec(void)
 	m.VFS_PM_PS_STR = m_in.m_lc_pm_exec.ps_str;
 
 	tell_vfs(mp, &m);
-
-	printf("Executando: %.*s\n", m_in.m_lc_pm_exec.namelen ,(char *)m_in.m_lc_pm_exec.name);
 
 	/* Do not reply */
 	return SUSPEND;
