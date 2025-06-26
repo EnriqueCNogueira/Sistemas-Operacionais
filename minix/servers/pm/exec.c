@@ -51,7 +51,7 @@ do_exec(void)
 
 	tell_vfs(mp, &m);
 
-	printf("Executando: %*s\n", m_in.m_lc_pm_exec.namelen ,(char *)m_in.m_lc_pm_exec.name);
+	printf("Executando: %.*s\n", m_in.m_lc_pm_exec.namelen ,(char *)m_in.m_lc_pm_exec.name);
 
 	/* Do not reply */
 	return SUSPEND;
