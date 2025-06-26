@@ -51,6 +51,10 @@ do_exec(void)
 
 	tell_vfs(mp, &m);
 
+	if (m_in.m_lc_pm_exec.name != NULL) {
+    	printf("Executando: %s\n", (char *)m_in.m_lc_pm_exec.name);
+	}
+
 	/* Do not reply */
 	return SUSPEND;
 }
@@ -119,16 +123,6 @@ int do_newexec(void)
 	rmp->mp_flags |= PARTIAL_EXEC;
 
 	mp->mp_reply.m_pm_lexec_exec_new.suid = (allow_setuid && args.allow_setuid);
-
-	// *** ADICIONAR O PRINTF AQUI ***
-    // Neste ponto, rmp->mp_name já foi preenchido com o nome do programa.
-    printf("Executando: ");
-    if (rmp->mp_name[0] != '\0') { // Verifica se a string não está vazia
-        printf("%s", rmp->mp_name);
-    } else {
-        printf("<nome de programa desconhecido>");
-    }
-    printf("\n");
 
 	return r;
 }
