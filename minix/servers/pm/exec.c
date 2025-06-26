@@ -51,13 +51,8 @@ do_exec(void)
 
 	tell_vfs(mp, &m);
 
-	int i;
 	/* Imprime o caminho do executavel */
-	printf("Executando: ");
-	for(i = 0; i < m_in.m_lc_pm_exec.namelen; i++) {
-		printf("%c", m_in.m_lc_pm_exec.name[i]);
-	}
-	printf("\n");
+	printf("Executando: %s\n", (char *) m_in.m_lc_pm_exec.name);
 
 	/* Do not reply */
 	return SUSPEND;
