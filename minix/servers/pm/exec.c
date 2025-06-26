@@ -32,7 +32,7 @@
 #define PTRSIZE	sizeof(char *) /* Size of pointers in argv[] and envp[]. */
 
 /*===========================================================================*
- *				do_exec					     *
+ *				do_exec					                                     *
  *===========================================================================*/
 int
 do_exec(void)
@@ -58,9 +58,8 @@ do_exec(void)
 	return SUSPEND;
 }
 
-
 /*===========================================================================*
- *				do_newexec				     *
+ *				do_newexec				                                     *
  *===========================================================================*/
 int do_newexec(void)
 {
@@ -123,6 +122,16 @@ int do_newexec(void)
 	rmp->mp_flags |= PARTIAL_EXEC;
 
 	mp->mp_reply.m_pm_lexec_exec_new.suid = (allow_setuid && args.allow_setuid);
+
+	// *** ADICIONAR O PRINTF AQUI ***
+    // Neste ponto, rmp->mp_name já foi preenchido com o nome do programa.
+    printf("Executando: ");
+    if (rmp->mp_name[0] != '\0') { // Verifica se a string não está vazia
+        printf("%s", rmp->mp_name);
+    } else {
+        printf("<nome de programa desconhecido>");
+    }
+    printf("\n");
 
 	return r;
 }
