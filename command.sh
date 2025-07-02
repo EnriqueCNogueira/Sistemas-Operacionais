@@ -1,0 +1,1 @@
+./a 10 1000000 100000000 > logs/output_10.txt && ./a 50 1000000 100000000 > logs/output_50.txt && ./a 100 1000000 100000000 > logs/output_100.txt && ./a 200 1000000 100000000 > logs/output_200.txt
