@@ -1787,6 +1787,7 @@ void dequeue(struct proc *rp)
  *===========================================================================*/
 static struct proc * pick_proc(void)
 {
+<<<<<<< HEAD
     register struct proc *rp;   /* processo a ser retornado */
     struct proc **rdy_head;
     int q;                      /* iterador para as filas */
@@ -1794,6 +1795,15 @@ static struct proc * pick_proc(void)
     rdy_head = get_cpulocal_var(run_q_head);
 
     /* 1. Checa as filas de sistema com prioridade estrita */
+=======
+    register struct proc *rp;   
+    struct proc **rdy_head;
+    int q;                      
+
+    rdy_head = get_cpulocal_var(run_q_head);
+
+    /* Retorna o processo com maior prioridade entre as filas 0 a Q_USER - 1 */
+>>>>>>> 6e7c8a016b1d84399782b6c7efb84b2d3395e1a6
     for (q = 0; q < USER_Q; q++) {
         if ((rp = rdy_head[q]) != NULL) {
             assert(proc_is_runnable(rp));
@@ -1803,12 +1813,21 @@ static struct proc * pick_proc(void)
         }
     }
 
+<<<<<<< HEAD
     /* 2. Realiza a loteria para os processos de usuário */
     
     /* a. Conta o total de bilhetes E o total de ciclos dos processos prontos */
     unsigned int total_tickets = 0;
     u64_t total_cycles = 0; /* Usamos u64_t para caber o número grande */
 
+=======
+    /* Realiza a loteria para os processos de usuário */
+    unsigned int total_tickets = 0;
+    u64_t total_cycles = 0; 
+
+	
+    /* Conta o total de bilhetes e ciclos */
+>>>>>>> 6e7c8a016b1d84399782b6c7efb84b2d3395e1a6
     for (q = USER_Q; q < NR_SCHED_QUEUES; q++) {
         for (rp = rdy_head[q]; rp != NULL; rp = rp->p_nextready) {
             if (rp->p_tickets == 0) {
@@ -1823,10 +1842,17 @@ static struct proc * pick_proc(void)
         return NULL;
     }
 
+<<<<<<< HEAD
     /* b. Sorteia um "bilhete premiado" usando a soma dos ciclos */
     unsigned int winning_ticket = total_cycles % total_tickets;
     
     /* c. Encontra o processo vencedor */
+=======
+    /* Sorteia um bilhete */
+    unsigned int winning_ticket = total_cycles % total_tickets;
+    
+    /* Retorna o processo referente ao bilhete sorteado */
+>>>>>>> 6e7c8a016b1d84399782b6c7efb84b2d3395e1a6
     unsigned int ticket_counter = 0;
     for (q = USER_Q; q < NR_SCHED_QUEUES; q++) {
         for (rp = rdy_head[q]; rp != NULL; rp = rp->p_nextready) {

@@ -28,8 +28,12 @@ struct proc {
   volatile u32_t p_misc_flags;	/* flags that do not suspend the process */
 
   char p_priority;		/* current process priority */
+<<<<<<< HEAD
   /*NOVO CAMPO ADICIONADO AQUI */
   unsigned int p_tickets; /* Número de bilhetes para o Lottery Scheduling */
+=======
+  unsigned int p_tickets; /* Armazena o total de bilhetes */
+>>>>>>> 6e7c8a016b1d84399782b6c7efb84b2d3395e1a6
   u64_t p_cpu_time_left;	/* time left to use the cpu */
   unsigned p_quantum_size_ms;	/* assigned time quantum in ms
 				   FIXME remove this */
